@@ -13,13 +13,13 @@ import com.hemanth.newsapp.views.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class NewsViewModel(private val apiServices: ApiServices): BaseViewModel() {
-    private val newsList = MutableLiveData<Resource<List<Articles>>>()
+    private val articlesList = MutableLiveData<Resource<List<Articles>>>()
     init {
         fetchNews()
     }
 
     private fun fetchNews() {
-        newsList.postValue(Resource.loading(null))
+        articlesList.postValue(Resource.loading(null))
         viewModelScope.launch {
             val everythingList = apiServices.getEverything("bitcoin",
             "2020-11-05",
@@ -27,14 +27,14 @@ class NewsViewModel(private val apiServices: ApiServices): BaseViewModel() {
             "7b9abfa9384e4a26a8986a0b9a7ad8a2").body()?.articles
 
             if (everythingList != null) {
-                newsList.postValue(Resource.success(everythingList))
+                articlesList.postValue(Resource.success(everythingList))
             } else {
-                newsList.postValue(Resource.error("", null))
+                articlesList.postValue(Resource.error("", null))
             }
         }
     }
 
-    fun getNewsList(): LiveData<Resource<List<Articles>>> {
-        return newsList
+    fun getArticlesList(): LiveData<Resource<List<Articles>>> {
+        return articlesList
     }
 }

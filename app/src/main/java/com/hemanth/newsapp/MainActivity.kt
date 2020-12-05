@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpNewsObserver() {
-        newsViewModel.getNewsList().observe(this, Observer {
+        newsViewModel.getArticlesList().observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressBar.visibility = View.GONE
